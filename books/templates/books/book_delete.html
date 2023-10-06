@@ -1,0 +1,36 @@
+{% extends "books/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container pt-2">
+  <div class="card col-10 col-md-7 mx-auto">
+    <h1 class="text-danger text-center">Delete Book</h1>
+    <h2 class="text-center">{{ book.title }}</h2>
+    <p class="text-center">Author: {{ book.author }}</p>
+    <div class="mx-auto">
+      {% if 'default' in book.image_url.url %}
+      <img src="{% static 'images/default-book.webp' %}" class="card-img-top mx-auto book-image" alt="{{ book.title }} image">
+      {% else %}
+      <img src="{{ book.image_url.url }}" class="card-img-top mx-auto book-image" alt="{{ book.title }} image">
+      {% endif %}
+    </div>
+    <div>
+      <p class="ps-3 pe-3 pt-2">
+        <span class="fst-italic">Short Description:</span>
+        {{ book.short_description }}
+      </p>
+      <div class="form-group text-center pb-2">
+        <form method="POST">
+          {% csrf_token %}
+          <p>Are you sure? <span class="text-danger">Cannot undo!</span>
+          </p>
+          <a href="{% url 'user_page' %}" class="btn btn-primary">Cancel</a>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
